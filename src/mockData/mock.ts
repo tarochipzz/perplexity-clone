@@ -41,21 +41,24 @@ export const MOCK_SOURCES = [
 export const MOCK_SEARCH_RESULT_WEB = {
   introduction:
     "There are four main types of coffee beans, each with distinct characteristics and optimal brewing methods.",
-  beans: [
+  content: [
     {
-      type: "Arabica",
-      description:
-        "These are the most popular coffee beans worldwide, known for their smooth, complex flavor profiles.",
-      sources: [1, 4],
-      bestBrewingMethods: [
+      title: "Arabica",
+      format: "list",
+      data: [
         {
-          method: "Pour-over",
+          description:
+            "These are the most popular coffee beans worldwide, known for their smooth, complex flavor profiles.",
+          sources: [1, 4],
+        },
+        {
+          subtitle: "Pour-over",
           description:
             "Ideal for teasing out delicate flavors. Use a finer grind, similar to table salt, for smaller pour-over cones.",
           sources: [2],
         },
         {
-          method: "Drip coffee",
+          subtitle: "Drip coffee",
           description:
             "A common choice for Arabica beans due to their balanced flavor profile.",
           sources: [1],
@@ -63,56 +66,65 @@ export const MOCK_SEARCH_RESULT_WEB = {
       ],
     },
     {
-      type: "Robusta",
-      description:
-        "These beans have a deeper, more bitter flavor with woody or nutty undertones.",
-      sources: [1, 4],
-      bestBrewingMethods: [
+      title: "Robusta",
+      format: "list",
+      data: [
         {
-          method: "Espresso",
+          description:
+            "These beans have a deeper, more bitter flavor with woody or nutty undertones.",
+          sources: [1, 4],
+        },
+        {
+          subtitle: "Espresso",
           description:
             "Their bold flavor stands up well to milk and other additions.",
           sources: [1],
         },
         {
-          method: "Coffee blends",
+          subtitle: "Coffee blends",
           description: "Often used to complement other coffee flavors.",
           sources: [1],
         },
       ],
     },
     {
-      type: "Excelsa",
-      description:
-        "Known for their complex flavor profile, combining light and dark roast traits.",
-      sources: [1, 4],
-      bestBrewingMethods: [
+      title: "Excelsa",
+      format: "list",
+      data: [
         {
-          method: "Brewed coffee",
+          description:
+            "Known for their complex flavor profile, combining light and dark roast traits.",
+          sources: [1, 4],
+        },
+        {
+          subtitle: "Brewed coffee",
           description:
             "Their unique flavor makes them popular as a stand-alone brew.",
           sources: [1],
         },
         {
-          method: "Coffee blends",
+          subtitle: "Coffee blends",
           description: "Adds dimension to the overall flavor.",
           sources: [1],
         },
       ],
     },
     {
-      type: "Liberica",
-      description:
-        "These beans have an unusual flavor profile described as nutty and woody.",
-      sources: [1, 4],
-      bestBrewingMethods: [
+      title: "Liberica",
+      format: "list",
+      data: [
         {
-          method: "Brewed coffee",
+          description:
+            "These beans have an unusual flavor profile described as nutty and woody.",
+          sources: [1, 4],
+        },
+        {
+          subtitle: "Brewed coffee",
           description: "Can be enjoyed on its own for its unique taste.",
           sources: [1],
         },
         {
-          method: "Desserts",
+          subtitle: "Desserts",
           description:
             "Their distinct flavor can add an interesting twist to coffee-based desserts.",
           sources: [1],
@@ -120,66 +132,61 @@ export const MOCK_SEARCH_RESULT_WEB = {
       ],
     },
   ],
-  additionalTips: [
-    {
-      topic: "Roast levels",
-      description:
-        "Light roasts retain more of the bean's original flavor and are best for pour-over or drip methods. Medium roasts offer balanced flavors and work well with most brewing methods. Dark roasts are ideal for espresso or recipes requiring intense flavor.",
-      sources: [1],
-    },
-    {
-      topic: "Grind size",
-      description:
-        "Use freshly ground beans and adjust the grind size according to your brewing method. For example, use a coarse grind (like sea salt) for French press and a medium-fine grind (like table salt) for pour-over methods.",
-      sources: [2, 5],
-    },
-  ],
 };
 
 export const MOCK_SEARCH_RESULT = {
   introduction:
     "Coffee enthusiasts around the world appreciate the diverse flavors and characteristics of different coffee bean varieties. Here's an overview of the main types of coffee beans and the best brewing methods for each:",
-  beans: [
+  content: [
     {
-      type: "Arabica",
-      description:
-        "Arabica beans are the most popular and widely consumed coffee beans, accounting for about 60-70% of global coffee production.",
+      title: "Types of Beans",
+      format: "list",
+      data: [
+        {
+          heading: "Arabica",
+          description:
+            "Arabica beans are the most popular and widely consumed coffee beans, accounting for about 60-70% of global coffee production.",
+        },
+        {
+          heading: "Robusta",
+          description:
+            "Robusta beans are known for their strong, bold flavor and higher caffeine content compared to Arabica beans. They are often used in espresso blends to add body and crema to the shot.",
+        },
+        {
+          heading: "Excelsa",
+          description:
+            "Excelsa beans are known for their unique flavor profile, combining light and dark roast traits.",
+        },
+      ],
     },
     {
-      type: "Robusta",
-      description:
-        "Robusta beans are known for their strong, bold flavor and higher caffeine content compared to Arabica beans. They are often used in espresso blends to add body and crema to the shot.",
-    },
-    {
-      type: "Excelsa",
-      description:
-        "Excelsa beans are known for their unique flavor profile, combining light and dark roast traits.",
-    },
-  ],
-  bestBrewingMethods: [
-    {
-      method: "Pour-over",
-      description:
-        "Ideal for: Arabica, Excelsa. This method highlights the delicate flavors and aromas of high-quality single-origin coffees.",
-    },
-    {
-      method: "Espresso",
-      description:
-        "Ideal for: Arabica (high-quality single-origin), Robusta (in blends) Espresso brewing can showcase the complexity of Arabica or harness the strong flavors and crema-producing qualities of Robusta.",
-    },
-    {
-      method: "French press",
-      description:
-        "Ideal for: Robusta, Liberica The full immersion brewing process extracts bold flavors and oils, complementing the characteristics of these bean types.",
-    },
-    {
-      method: "Cold brew",
-      description:
-        "Ideal for: Arabica, Liberica, Excelsa. The slow extraction process of cold brewing brings out the smooth, less acidic qualities of these beans while preserving their unique flavor profiles.",
+      title: "Best Brewing Methods",
+      format: "list",
+      data: [
+        {
+          heading: "Pour-over",
+          description:
+            "Ideal for: Arabica, Excelsa. This method highlights the delicate flavors and aromas of high-quality single-origin coffees.",
+        },
+        {
+          heading: "Espresso",
+          description:
+            "Ideal for: Arabica (high-quality single-origin), Robusta (in blends) Espresso brewing can showcase the complexity of Arabica or harness the strong flavors and crema-producing qualities of Robusta.",
+        },
+        {
+          heading: "French press",
+          description:
+            "Ideal for: Robusta, Liberica The full immersion brewing process extracts bold flavors and oils, complementing the characteristics of these bean types.",
+        },
+        {
+          heading: "Cold brew",
+          description:
+            "Ideal for: Arabica, Liberica, Excelsa. The slow extraction process of cold brewing brings out the smooth, less acidic qualities of these beans while preserving their unique flavor profiles.",
+        },
+      ],
     },
   ],
 };
 
 // 1. why are there sources sometimes ? but not all the time ? User transparency in the UI as we figure this out would help with confusion.
 // 2. shared spaces would be a nice collaboration feature !
-// 3.
