@@ -3,10 +3,11 @@ import React from "react";
 export const PerplexityIcon = ({ width = 24, height = 24, color = "black" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill={color}
+    fill="currentColor"
+    color={color}
+    stroke="currentColor"
     viewBox="0 0 400 400"
     strokeWidth={1.5}
-    stroke="currentColor"
     width={width}
     height={height}
   >

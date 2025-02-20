@@ -8,7 +8,11 @@ import { SocialGraphIcon } from "./icons/socialGraph";
 import { ButtonDropdown } from "./components/ButtonDropdown";
 import { useRouter } from "next/navigation";
 import { SearchSource, SearchType, useSearchStore } from "./store/searchStore";
-import { MOCK_SEARCH_RESULT, MOCK_SEARCH_RESULT_WEB } from "@/mockData/mock";
+import {
+  MOCK_RELATED_SEARCH,
+  MOCK_SEARCH_RESULT,
+  MOCK_SEARCH_RESULT_WEB,
+} from "@/mockData/mock";
 import { PlusCircleIcon } from "./icons/plusCircle";
 
 const trendingTopics = [
@@ -53,24 +57,28 @@ const formatStringForURI = (input: string) =>
 export default function HomePage() {
   const [search, setSearch] = useState("");
   const [sources, setSources] = useState<SearchSource[]>(["Web"]);
-  const [searchType, setSearchType] = useState<SearchType>("Auto");
 
   const addSearchThread = useSearchStore((state) => state.addSearchThread);
   const addSearchResult = useSearchStore((state) => state.addSearchResult);
   const setThreadLoading = useSearchStore((state) => state.setThreadLoading);
-
+  const addRelatedSearch = useSearchStore((state) => state.addRelatedSearch);
   const router = useRouter();
 
-  const mockFetchResult = (threadId: string, sources: SearchSource[]) => {
+  const mockFetchResult = (
+    threadId: string,
+    sources: SearchSource[],
+    searchTerm: string
+  ) => {
     return new Promise((resolve) => {
       setThreadLoading(true);
       setTimeout(() => {
         const results =
           sources.length > 0 ? MOCK_SEARCH_RESULT_WEB : MOCK_SEARCH_RESULT;
-        addSearchResult(threadId, results);
+        addSearchResult(threadId, { term: searchTerm, content: results });
+        addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
         resolve(results);
         setThreadLoading(false);
-      }, 1000);
+      }, 2000);
     });
   };
 
@@ -104,9 +112,8 @@ export default function HomePage() {
       key={option.label}
       onClick={() => {
         onOptionClick(option.label);
-        setSearchType(option.label);
       }}
-      className="block w-full text-left py-2 text-sm hover:bg-gray-100"
+      className="block w-full text-left p-2 text-sm hover:bg-gray-100 hover:rounded-lg"
     >
       <p className="font-medium">{option.label}</p>
       <p className="text-xs text-gray-500">{option.description}</p>
@@ -117,7 +124,7 @@ export default function HomePage() {
     const isActive = sources.includes(option);
 
     return (
-      <div key={option} className="flex flex-col py-3">
+      <div key={option} className="flex flex-col py-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {option === "Web" && (
@@ -181,10 +188,16 @@ export default function HomePage() {
   };
 
   return (
-    <div className="flex flex-col w-full items-center p-10">
-      <h2 className="text-3xl font-hanken mb-5">What do you want to know?</h2>
-      <div className="relative w-[40vw] p-2 bg-white rounded-2xl border border-gray-300 shadow-sm">
+    <div
+      className="flex flex-col w-full items-center justify-center h-[100vh] bg-center bg-no-repeat bg-[length:100%_100%]"
+      style={{ backgroundImage: "url('/background.webp')" }}
+    >
+      <h2 className="text-4xl text-white font-hanken mb-5 [text-shadow:_0_0_12px_rgba(0,0,0,0.6)]">
+        What do you want to know?
+      </h2>
+      <div className="relative w-[40vw] p-2 bg-white bg-opacity-80 rounded-2xl border border-gray-300 shadow-sm">
         <input
+          className="w-full p-2 rounded-lg bg-transparent focus:outline-none"
           type="text"
           placeholder="Ask anything..."
           value={search}
@@ -194,12 +207,15 @@ export default function HomePage() {
               const formattedSearch = formatStringForURI(search);
               const id = `${formattedSearch}-${Date.now()}`;
               addSearchThread({ id });
-              mockFetchResult(id, Object.keys(sources) as SearchSource[]);
+              mockFetchResult(
+                id,
+                Object.keys(sources) as SearchSource[],
+                search
+              );
               router?.push(`/search/${id}`);
               setSearch("");
             }
           }}
-          className="w-full p-2 rounded-lg focus:outline-none"
         />
         <div className="flex items-center gap-3 mt-2">
           <ButtonDropdown

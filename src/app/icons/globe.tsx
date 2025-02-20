@@ -3,13 +3,14 @@ import React from "react";
 export const GlobeIcon = ({
   width = 24,
   height = 24,
+  strokeWidth = 1.5,
   color = "grey",
   fill = "none",
 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={strokeWidth}
     stroke="currentColor"
     className="size-6"
     fill={fill}

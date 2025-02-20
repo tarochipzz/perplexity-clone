@@ -1,11 +1,16 @@
 import React from "react";
 
-export const SquaresIcon = ({ width = 24, height = 24, color = "grey" }) => (
+export const SquaresIcon = ({
+  width = 24,
+  height = 24,
+  color = "grey",
+  strokeWidth = 1.5,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={strokeWidth}
     stroke="currentColor"
     width={width}
     height={height}

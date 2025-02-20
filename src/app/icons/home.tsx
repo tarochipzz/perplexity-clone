@@ -1,9 +1,9 @@
 import React from "react";
 
-export const HomeIcon = ({ width = 24, height = 24, color = "black" }) => (
+export const HomeIcon = ({ width = 24, height = 24, color = "black", strokeWidth=1.5}) => (
   <svg
     fill="none"
-    strokeWidth="1.5"
+    strokeWidth={strokeWidth}
     color={color}
     stroke="currentColor"
     viewBox="0 0 24 24"

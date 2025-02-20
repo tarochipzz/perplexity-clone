@@ -49,7 +49,7 @@ export const ButtonDropdown = <T,>({
         selectedValue={selectedValue}
       />
       {dropdownOpen && (
-        <div className="absolute top-full w-64 bg-white border border-gray-200 shadow-lg rounded-lg z-10 px-3">
+        <div className="absolute top-full w-64 bg-white border border-gray-200 shadow-lg rounded-lg z-10 p-3">
           {options.map((option) =>
             renderOption(option, (value) => {
               setDropdownOpen(false);

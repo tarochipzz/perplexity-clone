@@ -1,11 +1,16 @@
 import React from "react";
 
-export const BookmarkIcon = ({ width = 22, height = 22, color = "grey" }) => (
+export const BookmarkIcon = ({
+  width = 22,
+  height = 22,
+  color = "grey",
+  strokeWidth = 1.5,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    strokeWidth={1.5}
+    strokeWidth={strokeWidth}
     stroke="currentColor"
     width={width}
     height={height}

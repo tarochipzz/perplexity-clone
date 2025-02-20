@@ -10,12 +10,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#FBFAF4",
+        background: "#f2f0e1",
         foreground: "var(--foreground)",
         primary: "#20808D",
-        primaryDark: "#133B39",
-        primaryLight: "#2E5E5A",
-        actionBackround: "#bcd1d0",
+        primaryDark: "rgba(19, 59, 57)",
+        primaryLight: "rgba(46, 94, 90)",
+        actionBackround: "rgba(19, 59, 57, 0.2)",
+        actionBackroundLight: "rgba(46, 94, 90, 0.2)",
       },
     },
   },

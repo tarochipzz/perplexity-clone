@@ -42,7 +42,7 @@ interface SearchStore {
   setThreadLoading: (loading: boolean) => void;
   getSearchThread: (threadId: string) => SearchThread | undefined;
   addSearchResult: (searchId: string, result: SearchResult) => void;
-  addRelatedSearch: (searchId: string, relatedSearch: string) => void;
+  addRelatedSearch: (searchId: string, relatedSearch: string[]) => void;
   createSpace: (space: Omit<Space, "id" | "threads">) => void;
   addThreadToSpace: (spaceId: string, thread: SearchThread) => void;
   addCollaborator: (spaceId: string, userId: string) => void;

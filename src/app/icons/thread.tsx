@@ -1,11 +1,16 @@
 import React from "react";
 
-export const ThreadIcon = ({ width = 20, height = 20, color = "grey" }) => (
+export const ThreadIcon = ({
+  width = 20,
+  height = 20,
+  color = "grey",
+  strokeWidth = 1.5,
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 512 512"
     fill="none"
-    strokeWidth={1.5}
+    strokeWidth={strokeWidth}
     stroke="currentColor"
     width={width}
     height={height}
