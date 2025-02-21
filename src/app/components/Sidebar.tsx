@@ -14,14 +14,19 @@ import { ChevronRightIcon } from "../icons/chevronRight";
 import { HomeIcon } from "../icons/home";
 import { useSearchStore } from "../store/searchStore";
 import { useGlobalSettingStateStore } from "../store/settingStorage";
+import { usePathname } from "next/navigation";
 
 interface SidebarNavItemProps {
   icon: (props: { strokeWidth: number; color?: string }) => JSX.Element;
-  label?: string;
+  label: string;
   route?: string;
-  children?: JSX.Element;
   subItems?: { label: string; route: string }[];
 }
+
+const labelToPathMapping: Record<string, string> = {
+  "": "home",
+  search: "threads",
+};
 
 const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
   icon: Icon,
@@ -29,27 +34,35 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
   route = "",
   subItems = [],
 }) => {
-  const { isExpanded, activeItem, setActiveItem } =
-    useGlobalSettingStateStore();
+  const { isExpanded } = useGlobalSettingStateStore();
+  const fullPath = usePathname().replace(/^\/+/, "") || "";
+
+  const [parentPath, childPath] = fullPath
+    .split("/")
+    .map((pathSegment) => labelToPathMapping[pathSegment] || pathSegment);
+
+  const isActiveParent = parentPath.toLowerCase() === label.toLowerCase();
   const hasSubItems = subItems.length > 0;
-  const isActive = activeItem === label;
 
   return (
-    <div className="flex flex-col hover:bg-actionBackroundLight rounded-xl">
-      <div className="flex items-center justify-between w-full">
-        <Link
-          className="flex w-full"
-          href={`/${route}`}
-          onClick={() => setActiveItem(label || "")}
-        >
+    <div className="flex flex-col rounded-xl">
+      <div className="flex items-center justify-between w-full hover:bg-actionBackroundLight rounded-xl">
+        <Link className="flex w-full" href={`/${route}`}>
           <button
             className={`flex items-center ${
               isExpanded ? "gap-3" : ""
             } cursor-pointer p-2 w-full text-gray-700 ${
-              isActive ? "font-bold bg-actionBackround rounded-xl" : ""
+              isActiveParent ? "font-bold" : ""
+            } ${
+              isActiveParent && !childPath
+                ? "bg-actionBackround rounded-xl"
+                : ""
             }`}
           >
-            <Icon color="text-gray-700" strokeWidth={isActive ? 2 : 1.5} />
+            <Icon
+              color="text-gray-700"
+              strokeWidth={isActiveParent ? 2 : 1.5}
+            />
             <motion.div
               initial={false}
               animate={{
@@ -57,7 +70,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
                 width: isExpanded ? "auto" : 0,
               }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="overflow-hidden whitespace-nowrap"
+              className="overflow-hidden whitespace-nowrap truncate"
             >
               {label}
             </motion.div>
@@ -71,19 +84,26 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="flex flex-col pl-6"
+            className="flex flex-col pl-6 w-full"
           >
-            {subItems.map((subItem) => (
-              <Link
-                key={subItem.route}
-                href={`/${subItem.route}`}
-                onClick={() => setActiveItem(subItem.label)}
-              >
-                <button className="text-gray-600 text-sm p-2 ml-3 hover:text-primary">
-                  {subItem.label}
-                </button>
-              </Link>
-            ))}
+            {subItems.map((subItem) => {
+              console.log(subItem, childPath);
+              return (
+                <Link
+                  key={subItem.route}
+                  href={`/${subItem.route}`}
+                  className="w-full"
+                >
+                  <button
+                    className={`text-gray-600 text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-actionBackroundLight rounded-lg ${
+                      fullPath === subItem.route ? "bg-actionBackround" : ""
+                    }`}
+                  >
+                    {subItem.label}
+                  </button>
+                </Link>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

@@ -4,21 +4,16 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface GlobalSettingState {
-  activeItem: string | null;
   isExpanded: boolean;
-  setActiveItem: (item: string) => void;
   toggleSidebar: () => void;
 }
 
 export const useGlobalSettingStateStore = create<GlobalSettingState>()(
   persist(
     (set) => ({
-      activeItem: null,
       isExpanded:
         JSON.parse(localStorage.getItem("sidebar-storage") || "true").state
           ?.isExpanded ?? false,
-
-      setActiveItem: (item) => set({ activeItem: item }),
       toggleSidebar: () => set((state) => ({ isExpanded: !state.isExpanded })),
     }),
     {
