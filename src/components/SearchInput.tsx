@@ -95,7 +95,11 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
 
       let streamingContent = "";
 
-      addSearchResult(threadId, { content: streamingContent });
+      addSearchResult(threadId, {
+        id: "0",
+        content: streamingContent,
+        type: "Auto",
+      });
       addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
 
       const chunks = results.split(/\n\s*\n/);
@@ -103,7 +107,11 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
       for (const chunk of chunks) {
         await new Promise((resolve) => setTimeout(resolve, 500));
         streamingContent += `${chunk}\n\n`; //
-        addSearchResult(threadId, { content: streamingContent });
+        addSearchResult(threadId, {
+          id: "0",
+          content: streamingContent,
+          type: "Auto",
+        });
       }
     } finally {
       setIsStreaming(false);

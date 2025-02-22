@@ -26,7 +26,7 @@ export interface SpaceSettings {
 export interface Space {
   id: string;
   title: string;
-  threads: Search[];
+  threads: SearchThread[];
   collaborators: string[]; // user ids
   settings: SpaceSettings;
 }
