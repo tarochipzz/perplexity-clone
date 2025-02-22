@@ -82,30 +82,32 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
 
   const mockFetchResult = async (threadId: string, sources: SearchSource[]) => {
     setThreadLoading(true);
-    const results =
-      sources.length > 0
-        ? MOCK_SEARCH_RESULT_WEB_MARKDOWN
-        : MOCK_SEARCH_RESULT_MARKDOWN;
-
-    // initial delay to simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    setThreadLoading(false);
-
     setIsStreaming(true);
-    const streamingResult = {
-      content: results,
-    };
 
-    addSearchResult(threadId, streamingResult);
-    addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
+    try {
+      const results =
+        sources.length > 0
+          ? MOCK_SEARCH_RESULT_WEB_MARKDOWN
+          : MOCK_SEARCH_RESULT_MARKDOWN;
 
-    // mock data streaming effect
-    for (const section of results.content) {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      streamingResult.content.content.push(section);
-      addSearchResult(threadId, { ...streamingResult });
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      setThreadLoading(false);
+
+      let streamingContent = "";
+
+      addSearchResult(threadId, { content: streamingContent });
+      addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
+
+      const chunks = results.split(/\n\s*\n/);
+
+      for (const chunk of chunks) {
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        streamingContent += `${chunk}\n\n`; //
+        addSearchResult(threadId, { content: streamingContent });
+      }
+    } finally {
+      setIsStreaming(false);
     }
-    setIsStreaming(false);
   };
 
   const SourcesButton: React.FC<
@@ -198,12 +200,16 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
 
   return (
     <div
-      className={`${positionStyle} w-[40vw] p-2 bg-white ${
-        transparent ? "bg-white/60 backdrop-blur-lg backdrop-saturate-150" : ""
-      } rounded-2xl border border-gray-300 shadow-sm`}
+      className={`${positionStyle} w-[40vw] p-2 bg-white rounded-2xl border border-gray-300 shadow-sm ${
+        transparent
+          ? "bg-white/60 backdrop-blur-lg backdrop-saturate-150"
+          : "ring-2 ring-offset-0 ring-black/20 backdrop-blur-lg"
+      }`}
     >
       <input
-        className="w-full p-2 rounded-lg bg-transparent placeholder-gray-600 focus:outline-none"
+        className={`w-full p-2 rounded-lg bg-transparent ${
+          transparent ? "placeholder-gray-600" : ""
+        }  focus:outline-none`}
         type="text"
         placeholder={isFollowup ? "Ask a follow-up" : "Ask anything..."}
         value={search}

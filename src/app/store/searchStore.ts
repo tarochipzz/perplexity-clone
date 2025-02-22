@@ -73,14 +73,14 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
         ...state.searchThreads,
       ],
     })),
-
-  addSearchResult: (searchId, result) =>
+  addSearchResult: (threadId, newResult) =>
     set((state) => ({
-      searchThreads: state.searchThreads.map((s) =>
-        s.id === searchId ? { ...s, results: [...s.results, result] } : s
+      searchThreads: state.searchThreads.map((thread) =>
+        thread.id === threadId
+          ? { ...thread, results: [{ ...thread.results[0], ...newResult }] }
+          : thread
       ),
     })),
-
   addRelatedSearch: (searchId, relatedSearch) =>
     set((state) => ({
       searchThreads: state.searchThreads.map((s) =>
