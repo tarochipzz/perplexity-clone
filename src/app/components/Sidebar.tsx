@@ -1,7 +1,7 @@
 "use client";
 
 import { JSX } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { GlobeIcon } from "../icons/globe";
 import { SquaresIcon } from "../icons/squares";
@@ -54,7 +54,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
             } cursor-pointer p-2 w-full text-gray-700 ${
               isActiveParent ? "font-bold" : ""
             } ${
-              isActiveParent && !childPath
+              isActiveParent && (!childPath || !isExpanded)
                 ? "bg-actionBackround rounded-xl"
                 : ""
             }`}
@@ -69,7 +69,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
                 opacity: isExpanded ? 1 : 0,
                 width: isExpanded ? "auto" : 0,
               }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
               className="overflow-hidden whitespace-nowrap truncate"
             >
               {label}
@@ -77,36 +77,32 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
           </button>
         </Link>
       </div>
-      <AnimatePresence>
-        {hasSubItems && isExpanded && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
-            className="flex flex-col pl-6 w-full"
-          >
-            {subItems.map((subItem) => {
-              console.log(subItem, childPath);
-              return (
-                <Link
-                  key={subItem.route}
-                  href={`/${subItem.route}`}
-                  className="w-full"
-                >
-                  <button
-                    className={`text-gray-600 text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-actionBackroundLight rounded-lg ${
-                      fullPath === subItem.route ? "bg-actionBackround" : ""
-                    }`}
-                  >
-                    {subItem.label}
-                  </button>
-                </Link>
-              );
-            })}
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+      {hasSubItems && isExpanded && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+          transition={{ duration: 0.1, ease: "easeInOut" }}
+          className="flex flex-col pl-6 w-full"
+        >
+          {subItems.map((subItem) => (
+            <Link
+              key={subItem.route}
+              href={`/${subItem.route}`}
+              className="w-full"
+            >
+              <button
+                className={`text-gray-600 text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-actionBackroundLight rounded-lg ${
+                  fullPath === subItem.route ? "bg-actionBackround" : ""
+                }`}
+              >
+                {subItem.label}
+              </button>
+            </Link>
+          ))}
+        </motion.div>
+      )}
     </div>
   );
 };
@@ -114,7 +110,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
 const SidebarNav: React.FC = () => {
   const searchThreads = useSearchStore((state) => state.searchThreads);
   const threadItems = searchThreads.map((thread) => ({
-    label: thread.results[0]?.term,
+    label: thread.searchTerm,
     route: `search/${thread.id}`,
   }));
   return (
@@ -146,10 +142,10 @@ export const Sidebar: React.FC = () => {
     <motion.aside
       initial={false}
       animate={{ width: isExpanded ? 256 : 70 }}
-      transition={{ duration: 0.3 }}
-      className={`flex flex-col bg-background p-5 shadow-md ${
-        isExpanded ? "gap-5" : "items-center gap-5"
-      }`}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className={`flex flex-col p-5 shadow-xl rounded-2xl
+        ${isExpanded ? "gap-5" : "items-center gap-5"}
+        bg-white/60 backdrop-blur-lg backdrop-saturate-150`}
     >
       <div className="flex items-center gap-3">
         {isExpanded ? (

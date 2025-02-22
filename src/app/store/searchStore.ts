@@ -9,15 +9,14 @@ export type SearchType =
   | "Reasoning with o3-mini";
 export interface SearchResult {
   id: string;
-  term: string;
   content: string;
-  sources?: SearchSource[];
   type: SearchType;
 }
 export interface SearchThread {
   id: string;
   results: SearchResult[];
-  relatedSearches?: string[];
+  searchTerm: string;
+  relatedSearches?: string[][];
 }
 export interface SpaceSettings {
   title: string;
@@ -36,10 +35,12 @@ interface SearchStore {
   searchThreads: SearchThread[];
   spaces: Space[];
   threadLoading: boolean;
+  isStreaming: boolean;
   addSearchThread: (
     search: Omit<SearchThread, "results" | "relatedSearches">
   ) => void;
   setThreadLoading: (loading: boolean) => void;
+  setIsStreaming: (isStreaming: boolean) => void;
   getSearchThread: (threadId: string) => SearchThread | undefined;
   addSearchResult: (searchId: string, result: SearchResult) => void;
   addRelatedSearch: (searchId: string, relatedSearch: string[]) => void;
@@ -52,6 +53,8 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
   searchThreads: [],
   spaces: [],
   threadLoading: false,
+  isStreaming: false,
+  setIsStreaming: (isStreaming: boolean) => set({ isStreaming }),
 
   setThreadLoading: (loading: boolean) => set({ threadLoading: loading }),
 
@@ -62,12 +65,12 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
   addSearchThread: (search) =>
     set((state) => ({
       searchThreads: [
-        ...state.searchThreads,
         {
           ...search,
           results: [],
           relatedSearches: [],
         },
+        ...state.searchThreads,
       ],
     })),
 

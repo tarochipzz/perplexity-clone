@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import {
   Geist,
   Geist_Mono,
@@ -12,6 +11,7 @@ import { Sidebar } from "./components/Sidebar";
 import { MoonIcon } from "./icons/moon";
 import { SunIcon } from "./icons/sun";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,18 +39,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+
   return (
     <html lang="en">
       <head>
         <title>Perplexity</title>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${hankenGrotesk.variable} antialiased`}
-      >
-        <div className="flex min-h-screen">
+      <body className={`${hankenGrotesk.variable} antialiased`}>
+        <div className="flex w-full h-screen p-2 gap-2">
           <Sidebar />
-          <main className="flex-1 flex flex-col max-h-[100vh] justify-center">
+          <main className="flex-1 flex flex-col max-h-[100vh]">
+            {isHomePage && (
+              <div className="absolute inset-0 -z-10 bg-cover bg-center bg-[url('/background.webp')]"></div>
+            )}
             {children}
           </main>
           <button

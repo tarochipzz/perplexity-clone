@@ -5,8 +5,8 @@ import { useState } from "react";
 import { SearchSource, SearchType, useSearchStore } from "../store/searchStore";
 import {
   MOCK_RELATED_SEARCH,
-  MOCK_SEARCH_RESULT,
-  MOCK_SEARCH_RESULT_WEB,
+  MOCK_SEARCH_RESULT_MARKDOWN,
+  MOCK_SEARCH_RESULT_WEB_MARKDOWN,
 } from "@/mockData/mock";
 import { ButtonDropdown } from "./ButtonDropdown";
 import { ChevronDownIcon } from "../icons/chevronDown";
@@ -65,7 +65,7 @@ const renderQueryTypeOptions = (
   </button>
 );
 
-export const SearchInput = ({ isFollowup = false }) => {
+export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
   const transparent = !isFollowup;
   const positionStyle = isFollowup ? "absolute bottom-10" : "relative";
 
@@ -74,27 +74,38 @@ export const SearchInput = ({ isFollowup = false }) => {
 
   const addSearchThread = useSearchStore((state) => state.addSearchThread);
   const setThreadLoading = useSearchStore((state) => state.setThreadLoading);
+  const setIsStreaming = useSearchStore((state) => state.setIsStreaming);
   const addSearchResult = useSearchStore((state) => state.addSearchResult);
   const addRelatedSearch = useSearchStore((state) => state.addRelatedSearch);
 
   const router = useRouter();
 
-  const mockFetchResult = (
-    threadId: string,
-    sources: SearchSource[],
-    searchTerm: string
-  ) => {
-    return new Promise((resolve) => {
-      setThreadLoading(true);
-      setTimeout(() => {
-        const results =
-          sources.length > 0 ? MOCK_SEARCH_RESULT_WEB : MOCK_SEARCH_RESULT;
-        addSearchResult(threadId, { term: searchTerm, content: results });
-        addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
-        resolve(results);
-        setThreadLoading(false);
-      }, 2000);
-    });
+  const mockFetchResult = async (threadId: string, sources: SearchSource[]) => {
+    setThreadLoading(true);
+    const results =
+      sources.length > 0
+        ? MOCK_SEARCH_RESULT_WEB_MARKDOWN
+        : MOCK_SEARCH_RESULT_MARKDOWN;
+
+    // initial delay to simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setThreadLoading(false);
+
+    setIsStreaming(true);
+    const streamingResult = {
+      content: results,
+    };
+
+    addSearchResult(threadId, streamingResult);
+    addRelatedSearch(threadId, MOCK_RELATED_SEARCH);
+
+    // mock data streaming effect
+    for (const section of results.content) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      streamingResult.content.content.push(section);
+      addSearchResult(threadId, { ...streamingResult });
+    }
+    setIsStreaming(false);
   };
 
   const SourcesButton: React.FC<
@@ -188,11 +199,11 @@ export const SearchInput = ({ isFollowup = false }) => {
   return (
     <div
       className={`${positionStyle} w-[40vw] p-2 bg-white ${
-        transparent ? "bg-opacity-80" : ""
+        transparent ? "bg-white/60 backdrop-blur-lg backdrop-saturate-150" : ""
       } rounded-2xl border border-gray-300 shadow-sm`}
     >
       <input
-        className="w-full p-2 rounded-lg bg-transparent focus:outline-none"
+        className="w-full p-2 rounded-lg bg-transparent placeholder-gray-600 focus:outline-none"
         type="text"
         placeholder={isFollowup ? "Ask a follow-up" : "Ask anything..."}
         value={search}
@@ -204,12 +215,8 @@ export const SearchInput = ({ isFollowup = false }) => {
             } else {
               const formattedSearch = formatStringForURI(search);
               const id = `${formattedSearch}-${Date.now()}`;
-              addSearchThread({ id });
-              mockFetchResult(
-                id,
-                Object.keys(sources) as SearchSource[],
-                search
-              );
+              addSearchThread({ id, searchTerm: search });
+              mockFetchResult(id, Object.keys(sources) as SearchSource[]);
               router?.push(`/search/${id}`);
             }
             setSearch("");
@@ -222,12 +229,14 @@ export const SearchInput = ({ isFollowup = false }) => {
           ButtonComponent={QueryTypeButton}
           options={queryTypes}
           renderOption={renderQueryTypeOptions}
+          openUpwards={openUpwards}
         />
         <ButtonDropdown
           defaultValue="Web"
           ButtonComponent={SourcesButton}
           options={["Web", "Academic", "Social"]}
           renderOption={renderSourceOption}
+          openUpwards={openUpwards}
         />
       </div>
     </div>

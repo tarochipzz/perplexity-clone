@@ -1,7 +1,13 @@
 import React from "react";
 
-export const PerplexityIcon = ({ width = 24, height = 24, color = "black" }) => (
+export const PerplexityIcon = ({
+  width = 24,
+  height = 24,
+  color = "black",
+  className = "",
+}) => (
   <svg
+    className={className}
     xmlns="http://www.w3.org/2000/svg"
     fill="currentColor"
     color={color}
