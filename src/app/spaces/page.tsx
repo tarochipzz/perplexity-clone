@@ -3,7 +3,7 @@
 export default function Spaces() {
   return (
     <div>
-      <h1>Spaces</h1>
+      <h1>There's nothing here yet :)</h1>
     </div>
   );
 };

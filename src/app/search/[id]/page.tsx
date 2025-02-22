@@ -1,12 +1,12 @@
 // https://nextjs.org/docs/pages/building-your-application/routing/dynamic-routes
 "use client";
 import { useEffect, useRef, useState } from "react";
-import MarkdownRenderer from "@/app/components/MarkdownRenderer";
-import { SearchInput } from "@/app/components/SearchInput";
-import { MagnifyingGlassIcon } from "@/app/icons/magnifyingGlass";
-import { PerplexityIcon } from "@/app/icons/perplexity";
-import { useSearchStore } from "@/app/store/searchStore";
+import { SearchInput } from "@/components/SearchInput";
+import { MagnifyingGlassIcon } from "@/icons/magnifyingGlass";
+import { PerplexityIcon } from "@/icons/perplexity";
+import { useSearchStore } from "@/store/searchStore";
 import { useParams } from "next/navigation";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 const ContentStream = ({
   markdownContent,
@@ -63,8 +63,10 @@ const ContentStream = ({
 
 export default function SearchThread() {
   const params = useParams();
-  const { getSearchThread, threadLoading, isStreaming } = useSearchStore();
   const scrollableComponentRef = useRef<HTMLDivElement>(null);
+
+  const { getSearchThread, threadLoading, isStreaming } = useSearchStore();
+
   const searchThread = getSearchThread(params.id as string);
   const markdownContent = searchThread?.results?.[0]?.content || "";
   const relatedSearches = searchThread?.relatedSearches || [];
@@ -76,19 +78,17 @@ export default function SearchThread() {
       ref={scrollableComponentRef}
       className="grid grid-cols-3 gap-8 pt-20 pb-[200px] mx-20 overflow-y-auto scrollbar-hide"
     >
-      {/* L Section: 2x width */}
+      {/* L Section, 2x width */}
       <div className="col-span-2 flex flex-col">
         <div className="flex items-center gap-2 py-6">
           <MagnifyingGlassIcon />
-          <input
-            type="text"
-            className="text-2xl w-fit font-bold p-2 focus:outline-none rounded-xl border border-gray"
-            value={searchThread?.searchTerm}
-            readOnly
-          />
+          <h1 className="text-2xl font-semibold p-2 ">
+            {searchThread?.searchTerm}
+          </h1>
         </div>
         {threadLoading ? (
           <div className="flex text-gray-700">
+            {/* best I can do without a gif */}
             <PerplexityIcon className="animate-spin" /> <div>...</div>
           </div>
         ) : (
@@ -99,8 +99,7 @@ export default function SearchThread() {
           />
         )}
       </div>
-
-      {/* R Section: 1x width */}
+      {/* R Section, 1x width */}
       {!!relatedSearches?.length && (
         <div className="pt-4 text-gray-700">
           <h2 className="text-lg font-semibold">Related Searches</h2>

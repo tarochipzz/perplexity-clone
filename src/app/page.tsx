@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchInput } from "./components/SearchInput";
+import { SearchInput } from "@/components/SearchInput";
 
 const trendingTopics = [
   { title: "Spotify Explores Premium Tier", link: "#" },

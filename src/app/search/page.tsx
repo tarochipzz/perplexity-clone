@@ -1,6 +1,6 @@
 "use client";
 
-const Discover = () => {
+export default function Search() {
   return (
     <div>
       <h1>There's nothing here yet :)</h1>
@@ -8,4 +8,4 @@ const Discover = () => {
   );
 };
 
-export default Discover;
+

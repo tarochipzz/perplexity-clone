@@ -1,5 +1,6 @@
 "use client";
-
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Geist,
   Geist_Mono,
@@ -7,11 +8,9 @@ import {
   Space_Grotesk,
 } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "./components/Sidebar";
-import { MoonIcon } from "./icons/moon";
-import { SunIcon } from "./icons/sun";
-import { useState } from "react";
-import { usePathname } from "next/navigation";
+import { Sidebar } from "@/components/Sidebar";
+import { MoonIcon } from "@/icons/moon";
+import { SunIcon } from "@/icons/sun";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
