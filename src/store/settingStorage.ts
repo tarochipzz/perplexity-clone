@@ -12,8 +12,10 @@ export const useGlobalSettingStateStore = create<GlobalSettingState>()(
   persist(
     (set) => ({
       isExpanded:
-        JSON.parse(localStorage.getItem("sidebar-storage") || "true").state
-          ?.isExpanded ?? false,
+        typeof window !== "undefined"
+          ? JSON.parse(localStorage.getItem("sidebar-storage") || "true").state
+              ?.isExpanded ?? true
+          : true,
       toggleSidebar: () => set((state) => ({ isExpanded: !state.isExpanded })),
     }),
     {
