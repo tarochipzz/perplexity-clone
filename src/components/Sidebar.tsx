@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX } from "react";
+import { JSX, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { GlobeIcon } from "../icons/globe";
@@ -70,21 +70,20 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
                 width: isExpanded ? "auto" : 0,
               }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="overflow-hidden whitespace-nowrap truncate"
+              className="hidden md:block overflow-hidden whitespace-nowrap truncate"
             >
               {label}
             </motion.div>
           </button>
         </Link>
       </div>
-
       {hasSubItems && isExpanded && (
         <motion.div
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.1, ease: "easeInOut" }}
-          className="flex flex-col pl-6 w-full"
+          className="hidden md:block flex flex-col pl-6 w-full"
         >
           {subItems.map((subItem) => (
             <Link
@@ -114,8 +113,8 @@ const SidebarNav: React.FC = () => {
     route: `search/${thread.id}`,
   }));
   return (
-    <nav className="flex justify-between flex-col h-full">
-      <div className="space-y-5 p-2">
+    <nav className="md:h-full">
+      <div className="flex md:flex-col space-x-8 md:space-y-5 md:space-x-0 p-2">
         <SidebarNavItem icon={HomeIcon} label="Home" />
         <SidebarNavItem icon={GlobeIcon} label="Discover" route="discover" />
         <SidebarNavItem icon={SquaresIcon} label="Spaces" route="spaces" />
@@ -137,17 +136,40 @@ const SidebarNav: React.FC = () => {
 
 export const Sidebar: React.FC = () => {
   const { isExpanded, toggleSidebar } = useGlobalSettingStateStore();
+  const [isDesktop, setIsDesktop] = useState(true);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+    setIsDesktop(mediaQuery.matches);
+
+    const handleResize = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
+
+  const sidebarVariants = {
+    desktop: {
+      width: isExpanded ? 256 : 70,
+      transition: { duration: 0.3, ease: "easeInOut" },
+    },
+    mobile: {
+      width: "100%",
+      transition: { duration: 0 },
+    },
+  };
 
   return (
     <motion.aside
       initial={false}
-      animate={{ width: isExpanded ? 256 : 70 }}
+      animate={isDesktop ? "desktop" : "mobile"}
+      variants={sidebarVariants}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className={`flex flex-col p-5 shadow-xl rounded-2xl
-        ${isExpanded ? "gap-5" : "items-center gap-5"}
-        bg-white/60 backdrop-blur-lg backdrop-saturate-150`}
+      style={{ width: isDesktop ? undefined : "100%" }}
+      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl md:rounded-2xl bg-white/60 backdrop-blur-lg backdrop-saturate-150 
+        ${isExpanded ? "gap-5" : "items-center gap-5"}`}
     >
-      <div className="flex items-center gap-3">
+      <div className="hidden md:flex items-center gap-3">
         {isExpanded ? (
           <>
             <PerplexityLogo height={50} width={165} />

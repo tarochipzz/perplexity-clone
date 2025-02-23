@@ -72,23 +72,21 @@ export default function SearchThread() {
   const relatedSearches = searchThread?.relatedSearches || [];
 
   if (!searchThread) return <div></div>;
-
   return (
     <div
       ref={scrollableComponentRef}
-      className="grid grid-cols-3 gap-8 pt-20 pb-[200px] mx-20 overflow-y-auto scrollbar-hide"
+      className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-20 pb-[200px] mx-4 md:mx-20 overflow-y-auto scrollbar-hide"
     >
-      {/* L Section, 2x width */}
-      <div className="col-span-2 flex flex-col">
+      {/* L Section, 2x width on desktop */}
+      <div className="md:col-span-2 flex flex-col">
         <div className="flex items-center gap-2 py-6">
           <MagnifyingGlassIcon />
-          <h1 className="text-2xl font-semibold p-2 ">
+          <h1 className="text-2xl font-semibold p-2">
             {searchThread?.searchTerm}
           </h1>
         </div>
         {threadLoading ? (
           <div className="flex text-gray-700">
-            {/* best I can do without a gif */}
             <PerplexityIcon className="animate-spin" /> <div>...</div>
           </div>
         ) : (
@@ -99,7 +97,8 @@ export default function SearchThread() {
           />
         )}
       </div>
-      {/* R Section, 1x width */}
+
+      {/* R Section (stacks below on mobile) */}
       {!!relatedSearches?.length && (
         <div className="pt-4 text-gray-700">
           <h2 className="text-lg font-semibold">Related Searches</h2>
@@ -115,6 +114,8 @@ export default function SearchThread() {
           </ul>
         </div>
       )}
+
+      {/* Search Input is always at bottom */}
       <SearchInput isFollowup />
     </div>
   );

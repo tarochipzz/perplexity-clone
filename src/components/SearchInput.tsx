@@ -67,7 +67,7 @@ const renderQueryTypeOptions = (
 
 export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
   const transparent = !isFollowup;
-  const positionStyle = isFollowup ? "absolute bottom-10" : "relative";
+  const positionStyle = isFollowup ? "absolute bottom-20 md:bottom-10" : "relative";
 
   const [search, setSearch] = useState("");
   const [sources, setSources] = useState<SearchSource[]>(["Web"]);
@@ -208,7 +208,7 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
 
   return (
     <div
-      className={`${positionStyle} w-[40vw] p-2 bg-white rounded-2xl border border-gray-300 shadow-sm ${
+      className={`${positionStyle} w-[90vw] md:w-[40vw] p-2 bg-white rounded-2xl border border-gray-300 shadow-sm ${
         transparent
           ? "bg-white/60 backdrop-blur-lg backdrop-saturate-150"
           : "ring-2 ring-offset-0 ring-black/20 backdrop-blur-lg"
