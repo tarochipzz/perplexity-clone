@@ -10,6 +10,7 @@ export type SearchType =
 export interface SearchResult {
   id: string;
   content: string;
+  timestamp?: string;
   type: SearchType;
 }
 export interface SearchThread {

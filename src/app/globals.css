@@ -2,22 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 242, 240, 225;
+  --foreground: 18, 18, 17;
+  --primary: 32, 128, 141;
+  --primary-dark: 19, 59, 57;
+  --text-gray: 75, 85, 99;
+  --text-gray-dark: 55, 65, 81;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.dark {
+  --background: 18, 18, 17;
+  --foreground: 242, 240, 225;
+  --primary: 32, 128, 141;
+  --primary-dark: 69, 135, 130;
+  --text-gray: 156, 163, 175;
+  --text-gray-dark: 209, 213, 219;
 }
 
 .scrollbar-hide::-webkit-scrollbar {

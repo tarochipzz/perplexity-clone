@@ -15,6 +15,12 @@ import { WebGlobeIcon } from "../icons/webGlobe";
 import { AcademicCapIcon } from "../icons/academicCap";
 import { SocialGraphIcon } from "../icons/socialGraph";
 
+const focusGlowEffect = `
+  transition-all duration-500 ease-out group 
+  focus-within:ring-2 focus-within:ring-opacity-60 focus-within:bg-gradient-to-r 
+  focus-within:from-[rgba(110,231,183,0.3)] focus-within:via-[rgba(253,224,71,0.1)] focus-within:to-[rgba(255,255,255,0.2)]
+  focus-within:bg-[length:200%_200%] focus-within:animate-glow-gradient focus-within:backdrop-blur-xl`;
+
 const formatStringForURI = (input: string) =>
   input.toLowerCase().replace(/\s+/g, "-").slice(0, 24);
 
@@ -41,7 +47,7 @@ const QueryTypeButton: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { selectedValue: string }
 > = ({ selectedValue, ...props }) => (
   <button
-    className="flex gap-1 items-center px-3 py-1 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200"
+    className="flex gap-1 items-center px-3 py-1 bg-gray-100 text-textGray rounded-lg hover:bg-gray-200"
     {...props}
   >
     <p className="text-sm">{selectedValue}</p>
@@ -58,7 +64,7 @@ const renderQueryTypeOptions = (
     onClick={() => {
       onOptionClick(option.label);
     }}
-    className="block w-full text-left p-2 text-sm hover:bg-gray-100 hover:rounded-lg"
+    className="block bg-background w-full text-left p-2 text-sm hover:bg-gray-100 hover:rounded-lg"
   >
     <p className="font-medium">{option.label}</p>
     <p className="text-xs text-gray-500">{option.description}</p>
@@ -67,7 +73,9 @@ const renderQueryTypeOptions = (
 
 export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
   const transparent = !isFollowup;
-  const positionStyle = isFollowup ? "absolute bottom-20 md:bottom-10" : "relative";
+  const positionStyle = isFollowup
+    ? "absolute bottom-20 md:bottom-10"
+    : "relative";
 
   const [search, setSearch] = useState("");
   const [sources, setSources] = useState<SearchSource[]>(["Web"]);
@@ -122,7 +130,7 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
     React.ButtonHTMLAttributes<HTMLButtonElement> & { selectedValue: string }
   > = ({ selectedValue, ...props }) => (
     <button
-      className="flex items-center gap-2 px-3 py-1 text-gray-600 rounded-2xl hover:bg-gray-200"
+      className="flex items-center gap-2 px-3 py-1 text-textGray rounded-2xl hover:bg-gray-200"
       {...props}
     >
       {sources.length === 0 && (
@@ -191,7 +199,7 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
               <span
                 className={`${
                   isActive ? "translate-x-2" : "translate-x-0"
-                } inline-block w-3 h-3 bg-white rounded-full transition-transform`}
+                } inline-block w-3 h-3 bg-background rounded-full transition-transform`}
               />
             </span>
           </label>
@@ -208,15 +216,15 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
 
   return (
     <div
-      className={`${positionStyle} w-[90vw] md:w-[40vw] p-2 bg-white rounded-2xl border border-gray-300 shadow-sm ${
+      className={`${positionStyle} w-[90vw] md:w-[40vw] p-2 rounded-2xl border border-gray-300 shadow-sm ${
         transparent
-          ? "bg-white/60 backdrop-blur-lg backdrop-saturate-150"
+          ? `bg-[rgba(var(--background),0.6)] backdrop-blur-lg backdrop-saturate-150 ${focusGlowEffect}`
           : "ring-2 ring-offset-0 ring-black/20 backdrop-blur-lg"
       }`}
     >
       <input
         className={`w-full p-2 rounded-lg bg-transparent ${
-          transparent ? "placeholder-gray-600" : ""
+          transparent ? "placeholder-textGray" : ""
         }  focus:outline-none`}
         type="text"
         placeholder={isFollowup ? "Ask a follow-up" : "Ask anything..."}

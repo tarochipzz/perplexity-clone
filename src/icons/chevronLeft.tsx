@@ -4,8 +4,10 @@ export const ChevronLeftIcon = ({
   width = 24,
   height = 24,
   color = "black",
+  className = "",
 }) => (
   <svg
+    className={className}
     fill="none"
     strokeWidth="1.5"
     color={color}

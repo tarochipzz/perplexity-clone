@@ -1,11 +1,17 @@
 import React from "react";
 
-export const MoonIcon = ({ width = 24, height = 24, color = "black" }) => (
+export const MoonIcon = ({
+  width = 24,
+  height = 24,
+  color = "black",
+  className = "",
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    fill="none"
+    className={className}
     viewBox="0 0 24 24"
     color={color}
+    fill="none"
     stroke="currentColor"
     height={height}
     width={width}

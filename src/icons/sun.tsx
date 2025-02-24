@@ -1,8 +1,14 @@
 import React from "react";
 
-export const SunIcon = ({ width = 24, height = 24, color = "black" }) => (
+export const SunIcon = ({
+  width = 24,
+  height = 24,
+  color = "black",
+  className = "",
+}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
+    className={className}
     fill="none"
     viewBox="0 0 24 24"
     color={color}

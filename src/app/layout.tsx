@@ -30,9 +30,36 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const [mounted, setMounted] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(
+    () =>
+      (typeof window !== "undefined" &&
+        (localStorage.theme === "dark" ||
+          window.matchMedia("(prefers-color-scheme: dark)").matches)) ||
+      false
+  );
+
   const pathname = usePathname();
   const isHomePage = pathname === "/";
+  const html = document?.documentElement;
+
+  const toggleDarkMode = () => {
+    if (typeof window === "undefined") return;
+    if (html.classList.contains("dark")) {
+      html.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setDarkMode(false);
+    } else {
+      html.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+      setDarkMode(true);
+    }
+  };
+
+  useEffect(() => {
+    if (darkMode && html) {
+      html.classList.add("dark");
+    }
+  }, [darkMode]);
 
   useEffect(() => setMounted(true), []);
 
@@ -52,18 +79,20 @@ export default function RootLayout({
               }`}
             >
               {isHomePage && (
-                <div className="absolute inset-0 -z-10 bg-cover bg-center bg-[url('/background.webp')]"></div>
+                <div className="absolute inset-0 -z-10 bg-cover bg-center bg-[url('/background.webp')]">
+                  <div className="hidden dark:block absolute inset-0 bg-background opacity-60"></div>
+                </div>
               )}
               {children}
             </main>
             <button
-              className="rounded-full bg-white bg-opacity-50 p-2 absolute top-5 right-5 md:bottom-5 md:top-auto"
-              onClick={() => setIsDarkMode((prev) => !prev)}
+              className="rounded-full bg-background bg-opacity-50 p-2 absolute top-5 right-5 md:bottom-5 md:top-auto"
+              onClick={toggleDarkMode}
             >
-              {isDarkMode ? (
-                <SunIcon width={20} height={20} />
+              {darkMode ? (
+                <SunIcon className="text-foreground" width={20} height={20} />
               ) : (
-                <MoonIcon width={20} height={20} />
+                <MoonIcon className="text-foreground" width={20} height={20} />
               )}
             </button>
           </div>

@@ -46,21 +46,21 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
 
   return (
     <div className="flex flex-col rounded-xl">
-      <div className="flex items-center justify-between w-full hover:bg-actionBackroundLight rounded-xl">
+      <div className="flex items-center justify-between w-full hover:bg-primaryDark hover:bg-opacity-20 rounded-xl">
         <Link className="flex w-full" href={`/${route}`}>
           <button
             className={`flex items-center ${
               isExpanded ? "gap-3" : ""
-            } cursor-pointer p-2 w-full text-gray-700 ${
+            } cursor-pointer p-2 w-full text-textGrayDark ${
               isActiveParent ? "font-bold" : ""
             } ${
               isActiveParent && (!childPath || !isExpanded)
-                ? "bg-actionBackround rounded-xl"
+                ? "bg-primaryDark bg-opacity-30 rounded-xl"
                 : ""
             }`}
           >
             <Icon
-              color="text-gray-700"
+              color="text-textGrayDark"
               strokeWidth={isActiveParent ? 2 : 1.5}
             />
             <motion.div
@@ -92,8 +92,10 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
               className="w-full"
             >
               <button
-                className={`text-gray-600 text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-actionBackroundLight rounded-lg ${
-                  fullPath === subItem.route ? "bg-actionBackround" : ""
+                className={`text-textGray text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-primaryDark hover:bg-opacity-20 rounded-lg ${
+                  fullPath === subItem.route
+                    ? "bg-primaryDark bg-opacity-30"
+                    : ""
                 }`}
               >
                 {subItem.label}
@@ -114,7 +116,7 @@ const SidebarNav: React.FC = () => {
   }));
   return (
     <nav className="md:h-full">
-      <div className="flex md:flex-col space-x-8 md:space-y-5 md:space-x-0 p-2">
+      <div className="flex md:flex-col justify-center space-x-8 md:space-y-5 md:space-x-0 p-2">
         <SidebarNavItem icon={HomeIcon} label="Home" />
         <SidebarNavItem icon={GlobeIcon} label="Discover" route="discover" />
         <SidebarNavItem icon={SquaresIcon} label="Spaces" route="spaces" />
@@ -166,15 +168,19 @@ export const Sidebar: React.FC = () => {
       variants={sidebarVariants}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{ width: isDesktop ? undefined : "100%" }}
-      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl md:rounded-2xl bg-white/60 backdrop-blur-lg backdrop-saturate-150 
+      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl md:rounded-2xl bg-background bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 
         ${isExpanded ? "gap-5" : "items-center gap-5"}`}
     >
       <div className="hidden md:flex items-center gap-3">
         {isExpanded ? (
           <>
-            <PerplexityLogo height={50} width={165} />
+            <PerplexityLogo
+              className="text-foreground"
+              height={50}
+              width={165}
+            />
             <button onClick={toggleSidebar}>
-              <ChevronLeftIcon />
+              <ChevronLeftIcon className="text-foreground" />
             </button>
           </>
         ) : (
@@ -182,9 +188,13 @@ export const Sidebar: React.FC = () => {
             onClick={toggleSidebar}
             className="mb-5 flex items-center relative"
           >
-            <PerplexityIcon width={32} height={32} />
+            <PerplexityIcon
+              className="text-foreground"
+              width={32}
+              height={32}
+            />
             <ChevronRightIcon
-              className="absolute left-7"
+              className="text-foreground absolute left-7"
               width={12}
               height={12}
               strokeWidth={3}
