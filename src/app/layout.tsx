@@ -40,10 +40,11 @@ export default function RootLayout({
 
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const html = document?.documentElement;
 
   const toggleDarkMode = () => {
     if (typeof window === "undefined") return;
+
+    const html = document.documentElement;
     if (html.classList.contains("dark")) {
       html.classList.remove("dark");
       localStorage.setItem("theme", "light");
@@ -56,8 +57,8 @@ export default function RootLayout({
   };
 
   useEffect(() => {
-    if (darkMode && html) {
-      html.classList.add("dark");
+    if (darkMode) {
+      document?.documentElement.classList.add("dark");
     }
   }, [darkMode]);
 
