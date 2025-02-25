@@ -1,29 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import {
-  Geist,
-  Geist_Mono,
-  Hanken_Grotesk,
-  Space_Grotesk,
-} from "next/font/google";
+import { Hanken_Grotesk, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/Sidebar";
 import { MoonIcon } from "@/icons/moon";
 import { SunIcon } from "@/icons/sun";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 const hankenGrotesk = Hanken_Grotesk({
   variable: "--font-hanken-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -70,9 +64,15 @@ export default function RootLayout({
         <title>Perplexity</title>
         <link rel="icon" href="/favicon.ico" />
       </head>
-      <body className={`${hankenGrotesk.variable} antialiased`}>
+      <body
+        className={`${hankenGrotesk.variable} ${spaceGrotesk.variable} font-hanken antialiased`}
+      >
         {mounted && (
-          <div className="flex flex-col md:flex-row w-full h-screen p-2 gap-2">
+          <div
+            className={`flex flex-col md:flex-row w-full h-screen p-2 gap-2 text-foreground ${
+              isHomePage ? "" : "bg-contentBackground"
+            }`}
+          >
             <Sidebar />
             <main
               className={`flex-1 flex flex-col max-h-[100vh] overflow-y-auto ${

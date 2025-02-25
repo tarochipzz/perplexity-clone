@@ -4,10 +4,13 @@ export const ChevronDownIcon = ({
   width = 24,
   height = 24,
   color = "black",
+  className = "",
+  strokeWidth = 1.5,
 }) => (
   <svg
+    className={className}
     fill="none"
-    strokeWidth="1.5"
+    strokeWidth={strokeWidth}
     color={color}
     stroke="currentColor"
     viewBox="0 0 24 24"

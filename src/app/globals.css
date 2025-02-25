@@ -6,6 +6,7 @@
 :root {
   --background: 242, 240, 225;
   --foreground: 18, 18, 17;
+  --content-background: 255, 255, 255;
   --primary: 32, 128, 141;
   --primary-dark: 19, 59, 57;
   --text-gray: 75, 85, 99;
@@ -15,6 +16,7 @@
 .dark {
   --background: 18, 18, 17;
   --foreground: 242, 240, 225;
+  --content-background: 25, 26, 26;
   --primary: 32, 128, 141;
   --primary-dark: 69, 135, 130;
   --text-gray: 156, 163, 175;

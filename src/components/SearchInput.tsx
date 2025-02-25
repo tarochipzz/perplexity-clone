@@ -14,6 +14,7 @@ import { PlusCircleIcon } from "../icons/plusCircle";
 import { WebGlobeIcon } from "../icons/webGlobe";
 import { AcademicCapIcon } from "../icons/academicCap";
 import { SocialGraphIcon } from "../icons/socialGraph";
+import { CheckIcon } from "@/icons/check";
 
 const focusGlowEffect = `
   transition-all duration-500 ease-out group 
@@ -47,32 +48,53 @@ const QueryTypeButton: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { selectedValue: string }
 > = ({ selectedValue, ...props }) => (
   <button
-    className="flex gap-1 items-center px-3 py-1 bg-gray-100 text-textGray rounded-lg hover:bg-gray-200"
+    className={`flex gap-1 items-center px-3 py-1 bg-background bg-opacity-60 dark:border dark:border-textGray text-textGray rounded-lg hover:bg-hover`}
     {...props}
   >
-    <p className="text-sm">{selectedValue}</p>
-    <ChevronDownIcon width={12} height={12} />
+    <p className="text-sm text-textGray">{selectedValue}</p>
+    <ChevronDownIcon
+      className="text-textGray"
+      width={12}
+      height={12}
+      strokeWidth={2}
+    />
   </button>
 );
 
 const renderQueryTypeOptions = (
   option: queryType,
-  onOptionClick: (value: string) => void
-) => (
-  <button
-    key={option.label}
-    onClick={() => {
-      onOptionClick(option.label);
-    }}
-    className="block bg-background w-full text-left p-2 text-sm hover:bg-gray-100 hover:rounded-lg"
-  >
-    <p className="font-medium">{option.label}</p>
-    <p className="text-xs text-gray-500">{option.description}</p>
-  </button>
-);
+  onOptionClick: (value: string) => void,
+  selectedValue: string
+) => {
+  const optionSelected = selectedValue === option.label;
+  return (
+    <button
+      key={option.label}
+      onClick={() => {
+        onOptionClick(option.label);
+      }}
+      className="block bg-contentBackground w-full text-left p-2 text-sm hover:bg-hover hover:rounded-lg"
+    >
+      <div className="flex justify-between">
+        <p
+          className={`font-semibold ${
+            optionSelected ? "text-primary" : "text-foreground"
+          }`}
+        >
+          {option.label}
+        </p>
+        {optionSelected && (
+          <CheckIcon className="text-foreground text-primary" width={16} />
+        )}
+      </div>
+      <p className="text-xs text-textGray">{option.description}</p>
+    </button>
+  );
+};
 
-export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
+export const SearchInput = ({ isFollowup = false }) => {
   const transparent = !isFollowup;
+  const openUpwards = isFollowup;
   const positionStyle = isFollowup
     ? "absolute bottom-20 md:bottom-10"
     : "relative";
@@ -130,7 +152,7 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
     React.ButtonHTMLAttributes<HTMLButtonElement> & { selectedValue: string }
   > = ({ selectedValue, ...props }) => (
     <button
-      className="flex items-center gap-2 px-3 py-1 text-textGray rounded-2xl hover:bg-gray-200"
+      className="flex items-center gap-2 px-3 py-1 text-textGray rounded-2xl hover:bg-hover"
       {...props}
     >
       {sources.length === 0 && (
@@ -155,29 +177,31 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             {option === "Web" && (
-              <WebGlobeIcon color={isActive ? "#20808D" : "gray"} width={18} />
+              <WebGlobeIcon
+                className={isActive ? "text-primary" : "text-foreground"}
+                width={18}
+              />
             )}
             {option === "Academic" && (
               <AcademicCapIcon
-                color={isActive ? "#20808D" : "gray"}
+                className={isActive ? "text-primary" : "text-foreground"}
                 width={18}
               />
             )}
             {option === "Social" && (
               <SocialGraphIcon
-                color={isActive ? "#20808D" : "gray"}
+                className={isActive ? "text-primary" : "text-foreground"}
                 width={18}
               />
             )}
             <p
-              className={`font-bold text-sm ${
-                isActive ? "text-primary" : "text-gray-500"
+              className={`font-semibold text-sm ${
+                isActive ? "text-primary" : "text-foreground"
               }`}
             >
               {option}
             </p>
           </div>
-
           <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
@@ -204,8 +228,7 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
             </span>
           </label>
         </div>
-
-        <p className="text-xs text-gray-500 ml-7">
+        <p className="text-xs text-textGray ml-7">
           {option === "Web" && "Across the entire internet"}
           {option === "Academic" && "Scholarly and research papers"}
           {option === "Social" && "Discussions and opinions"}
@@ -218,8 +241,8 @@ export const SearchInput = ({ isFollowup = false, openUpwards = false }) => {
     <div
       className={`${positionStyle} w-[90vw] md:w-[40vw] p-2 rounded-2xl border border-gray-300 shadow-sm ${
         transparent
-          ? `bg-[rgba(var(--background),0.6)] backdrop-blur-lg backdrop-saturate-150 ${focusGlowEffect}`
-          : "ring-2 ring-offset-0 ring-black/20 backdrop-blur-lg"
+          ? `bg-background bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 ${focusGlowEffect}`
+          : "ring-4 ring-foreground ring-opacity-20 bg-contentBackground"
       }`}
     >
       <input

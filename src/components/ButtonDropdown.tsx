@@ -10,7 +10,8 @@ export interface ButtonDropdownProps<T> {
   options: T[];
   renderOption: (
     option: T,
-    onOptionClick: (value: string) => void
+    onOptionClick: (value: string) => void,
+    selectedValue: string
   ) => React.ReactNode;
 }
 
@@ -54,13 +55,17 @@ export const ButtonDropdown = <T,>({
         <div
           className={`absolute ${
             openUpwards ? "bottom-full mb-2" : "top-full mt-2"
-          } w-64 bg-background border border-gray-200 shadow-lg rounded-lg z-10 p-3`}
+          } w-64 bg-contentBackground border border-gray-200 shadow-lg rounded-lg z-10 p-3`}
         >
           {options.map((option) =>
-            renderOption(option, (value) => {
-              setDropdownOpen(false);
-              setSelectedValue(value);
-            })
+            renderOption(
+              option,
+              (value) => {
+                setDropdownOpen(false);
+                setSelectedValue(value);
+              },
+              selectedValue
+            )
           )}
         </div>
       )}

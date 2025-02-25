@@ -46,7 +46,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
 
   return (
     <div className="flex flex-col rounded-xl">
-      <div className="flex items-center justify-between w-full hover:bg-primaryDark hover:bg-opacity-20 rounded-xl">
+      <div className="flex items-center justify-between w-full hover:bg-hover rounded-xl">
         <Link className="flex w-full" href={`/${route}`}>
           <button
             className={`flex items-center ${
@@ -55,7 +55,7 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
               isActiveParent ? "font-bold" : ""
             } ${
               isActiveParent && (!childPath || !isExpanded)
-                ? "bg-primaryDark bg-opacity-30 rounded-xl"
+                ? "bg-active rounded-xl"
                 : ""
             }`}
           >
@@ -92,10 +92,8 @@ const SidebarNavItem: React.FC<SidebarNavItemProps> = ({
               className="w-full"
             >
               <button
-                className={`text-textGray text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-primaryDark hover:bg-opacity-20 rounded-lg ${
-                  fullPath === subItem.route
-                    ? "bg-primaryDark bg-opacity-30"
-                    : ""
+                className={`text-textGray text-sm p-2 w-full text-left whitespace-nowrap truncate hover:bg-hover rounded-lg ${
+                  fullPath === subItem.route ? "bg-active" : ""
                 }`}
               >
                 {subItem.label}
@@ -168,7 +166,7 @@ export const Sidebar: React.FC = () => {
       variants={sidebarVariants}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{ width: isDesktop ? undefined : "100%" }}
-      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl md:rounded-2xl bg-background bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 
+      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl border border-foreground border-opacity-10 md:rounded-2xl bg-background bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 
         ${isExpanded ? "gap-5" : "items-center gap-5"}`}
     >
       <div className="hidden md:flex items-center gap-3">

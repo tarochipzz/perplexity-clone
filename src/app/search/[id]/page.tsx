@@ -80,7 +80,7 @@ export default function SearchThread() {
       {/* L Section, 2x width on desktop */}
       <div className="md:col-span-2 flex flex-col">
         <div className="flex items-center gap-2 py-6">
-          <MagnifyingGlassIcon />
+          <MagnifyingGlassIcon className="text-foreground"/>
           <h1 className="text-2xl font-semibold p-2">
             {searchThread?.searchTerm}
           </h1>
@@ -100,7 +100,7 @@ export default function SearchThread() {
 
       {/* R Section (stacks below on mobile) */}
       {!!relatedSearches?.length && (
-        <div className="pt-4 text-gray-700">
+        <div className="pt-4 text-textGray">
           <h2 className="text-lg font-semibold">Related Searches</h2>
           <ul className="mt-2 space-y-2">
             {relatedSearches[0].map((query, index) => (
@@ -114,8 +114,6 @@ export default function SearchThread() {
           </ul>
         </div>
       )}
-
-      {/* Search Input is always at bottom */}
       <SearchInput isFollowup />
     </div>
   );

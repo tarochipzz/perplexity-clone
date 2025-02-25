@@ -1,15 +1,16 @@
 import React from "react";
 
-export const MagnifyingGlassIcon = ({
+export const CheckIcon = ({
   width = 24,
   height = 24,
   color = "black",
   className = "",
+  strokeWidth = 1.5,
 }) => (
   <svg
     className={className}
     fill="none"
-    strokeWidth="1.5"
+    strokeWidth={strokeWidth}
     color={color}
     stroke="currentColor"
     viewBox="0 0 24 24"
@@ -21,7 +22,7 @@ export const MagnifyingGlassIcon = ({
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+      d="m4.5 12.75 6 6 9-13.5"
     />
   </svg>
 );

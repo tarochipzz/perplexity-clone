@@ -60,7 +60,7 @@ export default function MarkdownRenderer({
                 href={href}
                 target="_blank"
               >
-                <sup className="bg-gray-200 px-1 rounded text-xs">{refId}</sup>
+                <sup className="bg-textGray bg-opacity-20 px-1 rounded text-xs">{refId}</sup>
               </a>
             );
           },
