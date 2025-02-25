@@ -5,7 +5,7 @@ export const ChevronRightIcon = ({
   height = 24,
   color = "black",
   strokeWidth = 1.5,
-  className = "",
+  className = "text-foreground",
 }) => (
   <svg
     className={className}

@@ -173,12 +173,11 @@ export const Sidebar: React.FC = () => {
         {isExpanded ? (
           <>
             <PerplexityLogo
-              className="text-foreground"
               height={50}
               width={165}
             />
             <button onClick={toggleSidebar}>
-              <ChevronLeftIcon className="text-foreground" />
+              <ChevronLeftIcon />
             </button>
           </>
         ) : (
@@ -186,11 +185,7 @@ export const Sidebar: React.FC = () => {
             onClick={toggleSidebar}
             className="mb-5 flex items-center relative"
           >
-            <PerplexityIcon
-              className="text-foreground"
-              width={32}
-              height={32}
-            />
+            <PerplexityIcon width={32} height={32} />
             <ChevronRightIcon
               className="text-foreground absolute left-7"
               width={12}

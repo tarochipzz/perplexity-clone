@@ -44,7 +44,7 @@ export default function Search() {
         <input
           type="text"
           placeholder="Search your threads..."
-          className="flex items-center border pl-[40px] py-1 rounded-2xl w-full outline-none focus:outline-none focus:ring-primary"
+          className="flex items-center bg-contentBackground border pl-[40px] py-1 rounded-2xl w-full outline-none focus:outline-none focus:ring-primary"
           value={searchInput}
           onChange={handleChange}
         />

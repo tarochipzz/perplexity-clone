@@ -91,9 +91,9 @@ export default function RootLayout({
               onClick={toggleDarkMode}
             >
               {darkMode ? (
-                <SunIcon className="text-foreground" width={20} height={20} />
+                <SunIcon width={20} height={20} />
               ) : (
-                <MoonIcon className="text-foreground" width={20} height={20} />
+                <MoonIcon width={20} height={20} />
               )}
             </button>
           </div>

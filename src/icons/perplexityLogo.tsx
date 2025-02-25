@@ -4,7 +4,7 @@ export const PerplexityLogo = ({
   width = 1588,
   height = 400,
   color = "black",
-  className = "",
+  className = "text-foreground",
 }) => (
   <svg
     className={className}

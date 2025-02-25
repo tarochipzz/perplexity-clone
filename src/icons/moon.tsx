@@ -4,7 +4,7 @@ export const MoonIcon = ({
   width = 24,
   height = 24,
   color = "black",
-  className = "",
+  className = "text-foreground",
 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -87,7 +87,7 @@ export default function SearchThread() {
         </div>
         {threadLoading ? (
           <div className="flex text-gray-700">
-            <PerplexityIcon className="animate-spin" /> <div>...</div>
+            <PerplexityIcon className="text-foreground animate-spin" /> <div>...</div>
           </div>
         ) : (
           <ContentStream
