@@ -65,7 +65,7 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body
-        className={`${hankenGrotesk.variable} ${spaceGrotesk.variable} font-hanken antialiased`}
+        className={`${hankenGrotesk.variable} ${spaceGrotesk.variable} overscroll-none font-hanken antialiased`}
       >
         {mounted && (
           <div

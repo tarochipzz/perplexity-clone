@@ -80,14 +80,15 @@ export default function SearchThread() {
       {/* L Section, 2x width on desktop */}
       <div className="md:col-span-2 flex flex-col">
         <div className="flex items-center gap-2 py-6">
-          <MagnifyingGlassIcon className="text-foreground"/>
+          <MagnifyingGlassIcon className="text-foreground" />
           <h1 className="text-2xl font-semibold p-2">
             {searchThread?.searchTerm}
           </h1>
         </div>
         {threadLoading ? (
           <div className="flex text-gray-700">
-            <PerplexityIcon className="text-foreground animate-spin" /> <div>...</div>
+            <PerplexityIcon className="text-foreground animate-spin" />
+            <div>...</div>
           </div>
         ) : (
           <ContentStream

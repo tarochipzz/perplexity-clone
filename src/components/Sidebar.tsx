@@ -166,16 +166,14 @@ export const Sidebar: React.FC = () => {
       variants={sidebarVariants}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{ width: isDesktop ? undefined : "100%" }}
-      className={`absolute left-0 right-0 bottom-0 md:static flex flex-col p-3 md:p-5 shadow-xl border border-foreground border-opacity-10 md:rounded-2xl bg-background bg-opacity-60 backdrop-blur-lg backdrop-saturate-150 
-        ${isExpanded ? "gap-5" : "items-center gap-5"}`}
+      className={`z-10 absolute left-0 right-0 bottom-0 md:static flex flex-col p-2 md:p-5 shadow-xl border border-foreground border-opacity-10 md:rounded-2xl bg-background ${
+        isDesktop ? "bg-opacity-60 backdrop-blur-lg backdrop-saturate-150" : ""
+      } ${isExpanded ? "gap-5" : "items-center gap-5"}`}
     >
       <div className="hidden md:flex items-center gap-3">
         {isExpanded ? (
           <>
-            <PerplexityLogo
-              height={50}
-              width={165}
-            />
+            <PerplexityLogo height={50} width={165} />
             <button onClick={toggleSidebar}>
               <ChevronLeftIcon />
             </button>
