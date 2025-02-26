@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Perplexity.ai Frontend Recreation
 
-## Getting Started
+https://perplexity-clone-x2hs.vercel.app/
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is a recreation of Perplexity.ai's core frontend experience, showcasing my ability to design and build responsive user interfaces. Given my professional background in SaaS companies (where my work isn't publicly accessible), this project demonstrates my initiative, technical proficiency, design sense, and product-focused engineering abilities using Perplexity's stated tech stack (nextjs, typescript, tailwind, react).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The data and streaming response is mocked while only the homepage and threads pages are implemented, this was an intentional decision to focused on delivering a MVP that would highlight:
+- My initiative and ability to self-direct a project from scratch
+- Attention to user experience and design alignment with Perplexity's brand identity
+- Clean code suitable for a growing product
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Key Features & Highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Homepage & Thread Pages:** Focused on core functionality to highlight MVP delivery and design execution.
+- **Mocked Streaming Data:** Simulates real-time response behavior without incurring API costs, demonstrating understanding of streaming concepts.
+- **Reusable React Components:** Built with scalability in mind, showing the ability to manage state and component abstractions in large-scale codebases.
+- **Optimized Performance:** Emphasis on rendering efficiency and interaction performance for a smooth user experience.
+- **Accessible UI Elements:** Designed with accessibility best practices, ensuring inclusive user interactions.
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Interpreting the brand's aesthetic based on [Perplexity's branding article](https://medium.com/smith-diction/branding-perplexity-ai-70eb2cb2ef48) and Instagram presence, it gives a _"Calm, introspective, effortless, futuristic but retro"_ vibe, I aimed to replicate this tone and generated the background image via a ChatGPT prompt.
+- Check out dark vs light mode, responsiveness and subtle animations
